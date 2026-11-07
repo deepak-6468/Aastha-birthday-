@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Diwali, Aastha ❤️</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Google Fonts: Rozha One (Royalty/Devanagari serif), Great Vibes (Romantic script), Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Great+Vibes&family=Poppins:wght@300;400;600;700&family=Rozha+One&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            royal: ['"Rozha One"', 'serif'],
+            script: ['"Great Vibes"', 'cursive'],
+            cinzel: ['"Cinzel Decorative"', 'serif'],
+            sans: ['Poppins', 'sans-serif'],
+          },
+          colors: {
+            diwaliGold: '#F59E0B',
+            diwaliAmber: '#D97706',
+            festiveRed: '#881337',
+            deepMaroon: '#4C0519',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Prevent accidental text highlight on clicks */
+    * {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    body {
+      background-color: #1a050b;
+      overflow-x: hidden;
+    }
+
+    /* Traditional Indian Background Motif Pattern */
+    .indian-pattern {
+      background-color: #1c050d;
+      background-image: 
+        radial-gradient(circle at 50% 50%, rgba(217, 119, 6, 0.12) 0%, transparent 60%),
+        radial-gradient(circle at 10% 20%, rgba(136, 19, 55, 0.25) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(136, 19, 55, 0.25) 0%, transparent 40%),
+        radial-gradient(#b45309 0.75px, transparent 0.75px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 28px 28px;
+    }
+
+    /* Diya Flame Animation */
+    .flame-element {
+      transform-origin: center bottom;
+      animation: flicker 1.8s infinite ease-in-out alternate;
+    }
+
+    @keyframes flicker {
+      0% {
+        transform: scale(0.96, 1.02) rotate(-1.5deg);
+        filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 25px rgba(239, 68, 68, 0.6));
+      }
+      25% {
+        transform: scale(1.04, 0.95) rotate(1deg);
+        filter: drop-shadow(0 0 14px rgba(251, 191, 36, 1)) drop-shadow(0 0 35px rgba(245, 158, 11, 0.8));
+      }
+      50% {
+        transform: scale(0.98, 1.05) rotate(-2deg);
+        filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.95)) drop-shadow(0 0 28px rgba(239, 68, 68, 0.7));
+      }
+      75% {
+        transform: scale(1.05, 0.97) rotate(2deg);
+        filter: drop-shadow(0 0 16px rgba(251, 191, 36, 1)) drop-shadow(0 0 40px rgba(245, 158, 11, 0.9));
+      }
+      100% {
+        transform: scale(1.0, 1.02) rotate(0deg);
+        filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.9)) drop-shadow(0 0 30px rgba(239, 68, 68, 0.65));
+      }
+    }
+
+    /* Diya Body Halo Glow */
+    .diya-halo {
+      transition: all 0.5s ease-out;
+    }
+    .diya-lit .diya-halo {
+      box-shadow: 0 0 45px 15px rgba(245, 158, 11, 0.45);
+    }
+
+    /* Floating Love Popup Animation */
+    @keyframes floatUpFade {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 25px) scale(0.85);
+      }
+      18% {
+        opacity: 1;
+        transform: translate(-50%, -10px) scale(1.05);
+      }
+      30% {
+        transform: translate(-50%, -15px) scale(1);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -45px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -65px) scale(0.95);
+      }
+    }
+
+    .animate-love-popup {
+      animation: floatUpFade 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Hanging Bells Sway */
+    @keyframes bellSway {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(3.5deg); }
+      75% { transform: rotate(-3.5deg); }
+    }
+    .sway-bell {
+      transform-origin: top center;
+      animation: bellSway 4s ease-in-out infinite;
+    }
+
+    /* Pulse Glow for Unlit Diyas */
+    @keyframes promptPulse {
+      0%, 100% { opacity: 0.85; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.06); box-shadow: 0 0 14px rgba(251, 191, 36, 0.7); }
+    }
+    .prompt-badge {
+      animation: promptPulse 2s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="indian-pattern min-h-screen text-amber-100 flex flex-col justify-between relative selection:bg-amber-600 selection:text-white">
+
+  <!-- Background Fireworks Canvas -->
+  <canvas id="fireworksCanvas" class="fixed inset-0 pointer-events-none z-0 w-full h-full"></canvas>
+
+  <!-- Love Popup Anchor Container -->
+  <div id="lovePopupContainer" class="fixed inset-0 pointer-events-none z-50"></div>
+
+  <!-- Decorative Top Festoon (Toran & Marigold Garland) -->
+  <header class="relative z-10 w-full pt-4 pb-2 px-3 text-center">
+    <!-- Top Hanging Marigold / Bell Deco (SVGs) -->
+    <div class="flex justify-between items-start max-w-5xl mx-auto px-4 -mt-2 pointer-events-none">
+      <div class="sway-bell flex flex-col items-center">
+        <div class="w-0.5 h-10 bg-amber-500/60"></div>
+        <div class="w-5 h-5 rounded-full bg-gradient-to-b from-amber-400 to-amber-600 border border-amber-300 shadow-md flex items-center justify-center text-[10px]">🔔</div>
+      </div>
+      <div class="hidden sm:flex sway-bell flex-col items-center" style="animation-delay: 1s;">
+        <div class="w-0.5 h-14 bg-amber-500/60"></div>
+        <div class="w-4 h-4 rounded-full bg-orange-500 border border-yellow-300 shadow-sm flex items-center justify-center text-[8px]">🌼</div>
+      </div>
+      <div class="flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-950/70 border border-amber-500/40 backdrop-blur-md shadow-lg pointer-events-auto">
+        <span class="text-amber-400 text-sm">✨ शुभ दीपावली ✨</span>
+      </div>
+      <div class="hidden sm:flex sway-bell flex-col items-center" style="animation-delay: 2s;">
+        <div class="w-0.5 h-14 bg-amber-500/60"></div>
+        <div class="w-4 h-4 rounded-full bg-orange-500 border border-yellow-300 shadow-sm flex items-center justify-center text-[8px]">🌼</div>
+      </div>
+      <div class="sway-bell flex flex-col items-center" style="animation-delay: 1.5s;">
+        <div class="w-0.5 h-10 bg-amber-500/60"></div>
+        <div class="w-5 h-5 rounded-full bg-gradient-to-b from-amber-400 to-amber-600 border border-amber-300 shadow-md flex items-center justify-center text-[10px]">🔔</div>
+      </div>
+    </div>
+
+    <!-- Main Title Section -->
+    <div class="mt-3 max-w-3xl mx-auto px-4">
+      <p class="text-rose-300 text-sm sm:text-base font-royal tracking-widest uppercase">To My Beloved Wife</p>
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-royal font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-yellow-200 mt-1 drop-shadow-md">
+        Happy Diwali, Aastha ❤️
+      </h1>
+      <p class="text-amber-200/90 font-script text-2xl sm:text-3xl mt-1">
+        Light up the 7 diyas of our love, my queen...
+      </p>
+
+      <!-- Audio & Counter Pill Row -->
+      <div class="flex items-center justify-center gap-3 mt-4">
+        <span id="counterBadge" class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs sm:text-sm font-semibold bg-rose-950/80 border border-amber-500/50 shadow-md text-amber-200">
+          <span>🪔</span> <span id="litCountText">0 of 7 Diyas Lighted</span>
+        </span>
+        <button id="soundToggleBtn" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-amber-950/80 border border-amber-500/50 hover:border-amber-300 transition text-amber-300 shadow-md">
+          <span id="soundIcon">🔊</span> <span id="soundLabel">Sound On</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Central Interaction Hub -->
+  <main class="relative z-10 max-w-6xl mx-auto px-4 py-4 w-full flex flex-col items-center flex-grow justify-center">
+
+    <!-- Active Wish Banner Box (Displays wish from currently selected / lighted diya) -->
+    <div id="wishDisplayCard" class="w-full max-w-3xl bg-gradient-to-b from-rose-950/85 via-amber-950/80 to-rose-950/90 border-2 border-amber-400/70 rounded-3xl p-5 sm:p-7 shadow-2xl backdrop-blur-md relative overflow-hidden transition-all duration-500 mb-6">
+      <!-- Royal Corner Ornaments -->
+      <div class="absolute top-2 left-2 text-amber-400/40 text-lg">✦</div>
+      <div class="absolute top-2 right-2 text-amber-400/40 text-lg">✦</div>
+      <div class="absolute bottom-2 left-2 text-amber-400/40 text-lg">✦</div>
+      <div class="absolute bottom-2 right-2 text-amber-400/40 text-lg">✦</div>
+
+      <!-- Header Label for Wish Box -->
+      <div class="flex items-center justify-center gap-2 mb-2">
+        <span class="h-px w-8 bg-amber-400/40"></span>
+        <span id="wishDiyaTag" class="text-xs sm:text-sm uppercase tracking-widest font-royal text-amber-300 font-bold">
+          Touch Any Diya Below To Light It
+        </span>
+        <span class="h-px w-8 bg-amber-400/40"></span>
+      </div>
+
+      <!-- Hindi Romantic Shloka/Quote -->
+      <p id="wishHindi" class="text-xl sm:text-2xl md:text-3xl font-royal text-center text-amber-100 font-bold leading-relaxed transition-all duration-300 drop-shadow">
+        "आस्था, तुम्हारी मुस्कान ही मेरे हर त्यौहार की सबसे खूबसूरत रौशनी है।"
+      </p>
+
+      <!-- English Romantic Translation -->
+      <p id="wishEnglish" class="text-sm sm:text-base text-rose-200/90 text-center font-normal mt-3 max-w-2xl mx-auto leading-relaxed transition-all duration-300">
+        Every diya I ignite tonight whispers a tender prayer for your eternal happiness, my darling Aastha.
+      </p>
+
+      <!-- Quick Hint Bar -->
+      <div class="mt-4 pt-3 border-t border-amber-500/20 text-center">
+        <p id="wishActionHint" class="text-xs text-amber-400/80 font-medium tracking-wide">
+          👇 Tap on each Diya dedicated to your lovely names below
+        </p>
+      </div>
+    </div>
+
+    <!-- The 7 Diyas Row / Responsive Grid -->
+    <div class="w-full max-w-5xl py-2">
+      <div id="diyasContainer" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4 justify-items-center">
+        <!-- Javascript dynamically injects the 7 detailed SVG Diyas here -->
+      </div>
+    </div>
+
+    <!-- Action Bar: Light All / Reset Buttons -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mt-4">
+      <button id="lightAllBtn" class="px-5 py-2.5 rounded-full font-royal text-xs sm:text-sm font-bold bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-stone-950 shadow-lg shadow-amber-500/20 transform hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+        <span>✨</span> Light All 7 Diyas
+      </button>
+      <button id="resetBtn" class="px-4 py-2.5 rounded-full font-sans text-xs sm:text-sm font-medium bg-rose-950/60 hover:bg-rose-900/80 border border-amber-500/30 text-amber-200 hover:text-white transition-all">
+        🔄 Relight Again
+      </button>
+    </div>
+
+  </main>
+
+  <!-- Footer with Heartfelt Signoff -->
+  <footer class="relative z-10 w-full py-3 px-4 text-center border-t border-amber-500/20 bg-rose-950/40 backdrop-blur-sm">
+    <p class="text-xs sm:text-sm text-amber-200/80">
+      Forever Yours, With All My Heart • Happy Diwali 2024 & Always ❤️
+    </p>
+  </footer>
+
+  <!-- Grand Finale Modal Dialog (Triggers when all 7 diyas are lit) -->
+  <div id="finaleModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-500">
+    <div class="bg-gradient-to-b from-rose-950 via-amber-950 to-rose-950 border-2 border-amber-400 rounded-3xl max-w-lg w-full p-6 sm:p-8 text-center shadow-2xl relative">
+      <button id="closeModalBtn" class="absolute top-4 right-4 text-amber-400/80 hover:text-amber-200 text-xl font-bold p-1">✕</button>
+      <div class="text-4xl sm:text-5xl mb-2">🪔✨💖</div>
+      <h3 class="text-2xl sm:text-3xl font-royal font-bold text-amber-300">
+        All 7 Diyas are Glowing!
+      </h3>
+      <p class="text-rose-200 font-script text-2xl mt-1">For My Precious Aastha</p>
+      
+      <div class="my-4 p-4 rounded-2xl bg-amber-900/30 border border-amber-500/30 text-amber-100 text-sm sm:text-base leading-relaxed">
+        <p class="font-royal font-bold text-amber-200 mb-2">
+          "Aastha, Menchu, Gugu, Moti, Kuni baby, Dugu, my Wifey..."
+        </p>
+        <p class="text-xs sm:text-sm text-rose-200/90">
+          No matter which sweet name I call you by, my love for you shines brighter than all the lights in the universe combined. May our home always glow with smiles, health, togetherness, and unending romance.
+        </p>
+      </div>
+
+      <p class="text-lg font-royal font-bold text-amber-300 mt-2">
+        I Love You To Infinity & Beyond! 💍❤️
+      </p>
+
+      <button id="modalCelebrationBtn" class="mt-5 w-full py-3 rounded-full font-royal font-bold text-stone-950 bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 shadow-xl shadow-amber-500/30 hover:scale-105 active:scale-95 transition-transform">
+        Burst More Love & Crackers! 🎆
+      </button>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    /* ==============================================================
+       1. DATA DEFINITIONS (7 Diyas with Nicknames & Romantic Wishes)
+       ============================================================== */
+    const diyasData = [
+      {
+        id: 1,
+        nickname: "Aastha",
+        title: "Diya of Eternal Love",
+        tag: "1st Diya • Aastha",
+        hindi: "आस्था, तेरी आँखों की चमक से ही मेरा हर त्यौहार रोशन है।",
+        english: "Aastha, the festival of lights truly begins in your eyes. With you by my side, every day feels like heaven.",
+        loveTitle: "I Love You, Aastha! ❤️",
+        loveSub: "मैं तुमसे बेइंतहा मोहब्बत करता हूँ, मेरी आस्था।"
+      },
+      {
+        id: 2,
+        nickname: "Menchu",
+        title: "Diya of Sweet Togetherness",
+        tag: "2nd Diya • Menchu",
+        hindi: "मेरी प्यारी मेन्चू, तेरा हाथ थाम कर हर जनम यूँ ही मुस्कुराना है।",
+        english: "My sweet Menchu, walking through life holding your hand is my greatest fortune and blessing.",
+        loveTitle: "Je t'aime, Menchu! 🌹",
+        loveSub: "You are the sweetest part of my life, my cute Menchu!"
+      },
+      {
+        id: 3,
+        nickname: "Gugu",
+        title: "Diya of Joy & Laughter",
+        tag: "3rd Diya • Gugu",
+        hindi: "गुगु, तेरी मासूम सी हंसी पर मेरी पूरी दुनिया कुर्बान है।",
+        english: "Gugu, your sweet innocent laugh lights up my universe brighter than a thousand Diwali sparklers.",
+        loveTitle: "तू ही मेरी जान है, Gugu! 💖",
+        loveSub: "Te Amo with all my soul, adorable Gugu!"
+      },
+      {
+        id: 4,
+        nickname: "Moti",
+        title: "Diya of Grace & Lakshmi",
+        tag: "4th Diya • Moti",
+        hindi: "मेरी अनमोल मोती, तू मेरे दिल और घर की सबसे सुंदर लक्ष्मी है।",
+        english: "My precious Moti, you bring pure grace, warmth, and boundless good fortune into my life.",
+        loveTitle: "I Cherish You, Moti! ✨",
+        loveSub: "मेरी अनमोल मोती, मेरी हर धड़कन सिर्फ तेरे लिए है।"
+      },
+      {
+        id: 5,
+        nickname: "Kuni baby",
+        title: "Diya of Cuddles & Dreams",
+        tag: "5th Diya • Kuni baby",
+        hindi: "कुनी बेबी, रब से दुआ है कि तेरे सारे प्यारे ख्वाब हमेशा पूरे हों।",
+        english: "My adorable Kuni baby, may every secret wish in your tender heart turn into a beautiful reality.",
+        loveTitle: "Ti Amo, Kuni baby! 🧸",
+        loveSub: "You are my softest, warmest comfort in this whole world."
+      },
+      {
+        id: 6,
+        nickname: "Dugu",
+        title: "Diya of Devotion & Care",
+        tag: "6th Diya • Dugu",
+        hindi: "डुगु, दुनिया की हर बला से दूर, तुझे हमेशा सीने से लगा कर रखूँगा।",
+        english: "Dugu, I promise to forever protect you, cherish you, and hold you close through all seasons.",
+        loveTitle: "तुम मेरी रूह हो, Dugu 💕",
+        loveSub: "My heart beats unconditionally for you, my darling Dugu."
+      },
+      {
+        id: 7,
+        nickname: "wifey",
+        title: "Diya of Eternity",
+        tag: "7th Diya • Wifey",
+        hindi: "सिर्फ ये दीवाली नहीं, हर जनम में मुझे सिर्फ और सिर्फ मेरी Wifey चाहिए।",
+        english: "Not just in this lifetime, but across seven lifetimes, I will always choose you as my wifey. Happy Diwali!",
+        loveTitle: "Forever Yours, Wifey! 💍",
+        loveSub: "सात जन्मों तक सिर्फ तुम्हारा... I Love You Wifey!"
+      }
+    ];
+
+    // State
+    const litStatus = [false, false, false, false, false, false, false];
+    let soundEnabled = true;
+    let audioCtx = null;
+
+    /* ==============================================================
+       2. WEB AUDIO SYNTHESIZER (Temple Chimes & Firecracker Pops)
+       ============================================================== */
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        audioCtx = new AudioContext();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Play sweet chime when lighting diya
+    function playChime(freq = 660) {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.5, audioCtx.currentTime + 0.35);
+
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.8);
+      } catch (e) {
+        // Audio error fail silently
+      }
+    }
+
+    // Play realistic soft cracker burst sound
+    function playCrackerPop() {
+      if (!soundEnabled) return;
+      try {
+        initAudio();
+        const bufferSize = audioCtx.sampleRate * 0.15;
+        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = (Math.random() * 2 - 1) * Math.exp(-i / (bufferSize * 0.25));
+        }
+
+        const noise = audioCtx.createBufferSource();
+        noise.buffer = buffer;
+
+        const filter = audioCtx.createBiquadFilter();
+        filter.type = 'bandpass';
+        filter.frequency.value = 1000 + Math.random() * 800;
+        filter.Q.value = 1.2;
+
+        const gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0.18, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        noise.start();
+      } catch (e) {}
+    }
+
+    /* ==============================================================
+       3. RENDER DIYAS
+       ============================================================== */
+    const container = document.getElementById('diyasContainer');
+
+    function renderDiyas() {
+      container.innerHTML = diyasData.map((diya, index) => {
+        const isLit = litStatus[index];
+        return `
+          <div id="diyaCard-${index}" class="relative flex flex-col items-center group cursor-pointer p-2 rounded-2xl transition-all duration-300 hover:scale-105 active:scale-95" onclick="handleDiyaClick(${index}, event)">
+            
+            <!-- Click Me / Light Prompt for unlit diyas -->
+            <div id="promptBadge-${index}" class="absolute -top-3 z-30 transition-all duration-300 ${isLit ? 'opacity-0 pointer-events-none' : 'opacity-100'}">
+              <span class="prompt-badge text-[10px] font-bold tracking-wider px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 text-stone-950 shadow-md uppercase">
+                Tap Me
+              </span>
+            </div>
+
+            <!-- Diya Graphic Container -->
+            <div class="relative w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center rounded-2xl diya-halo ${isLit ? 'diya-lit bg-amber-500/10' : 'bg-rose-950/40'} border ${isLit ? 'border-amber-400/80 shadow-amber-500/30' : 'border-amber-500/20'}">
+              
+              <svg viewBox="0 0 160 140" class="w-full h-full overflow-visible">
+                <defs>
+                  <!-- Flame Radial Gradient -->
+                  <radialGradient id="flameGrad-${index}" cx="50%" cy="80%" r="70%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="25%" stop-color="#fef08a"/>
+                    <stop offset="55%" stop-color="#f59e0b"/>
+                    <stop offset="85%" stop-color="#ef4444"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                  </radialGradient>
+                  
+                  <!-- Diya Clay Texture Gradient -->
+                  <linearGradient id="clayGrad-${index}" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#d97706"/>
+                    <stop offset="40%" stop-color="#92400e"/>
+                    <stop offset="100%" stop-color="#451a03"/>
+                  </linearGradient>
+
+                  <!-- Diya Rim Gradient -->
+                  <linearGradient id="rimGrad-${index}" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#b45309"/>
+                    <stop offset="50%" stop-color="#fbbf24"/>
+                    <stop offset="100%" stop-color="#b45309"/>
+                  </linearGradient>
+
+                  <!-- Oil Pool Gradient -->
+                  <radialGradient id="oilGrad-${index}" cx="50%" cy="40%" r="50%">
+                    <stop offset="0%" stop-color="#fde047" stop-opacity="0.9"/>
+                    <stop offset="70%" stop-color="#b45309" stop-opacity="0.8"/>
+                    <stop offset="100%" stop-color="#451a03"/>
+                  </radialGradient>
+                </defs>
+
+                <!-- FLAME GROUP (Toggled on isLit) -->
+                <g id="flameGroup-${index}" class="${isLit ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500">
+                  <!-- Outer Warm Glow -->
+                  <circle cx="80" cy="40" r="38" fill="#f59e0b" opacity="0.25" class="animate-pulse" />
+                  
+                  <!-- Main Flame Shape -->
+                  <path d="M 80,6 C 92,26 98,42 80,62 C 62,42 68,26 80,6 Z" 
+                        fill="url(#flameGrad-${index})" 
+                        class="flame-element" />
+                  
+                  <!-- Inner Blue-White Core -->
+                  <ellipse cx="80" cy="54" rx="4.5" ry="9" fill="#e0f2fe" opacity="0.9" class="flame-element" />
+                </g>
+
+                <!-- DIYA BASE & OIL (Classic Terracotta Indian Shape) -->
+                <!-- Oil pool -->
+                <ellipse cx="80" cy="74" rx="48" ry="14" fill="url(#oilGrad-${index})" stroke="#f59e0b" stroke-width="1" />
+                
+                <!-- Wick Tip -->
+                <path d="M 78,74 Q 80,64 80,58" stroke="#1c1917" stroke-width="3" stroke-linecap="round" fill="none" />
+                
+                <!-- Terracotta Clay Body -->
+                <path d="M 32,74 C 32,106 62,122 80,122 C 98,122 128,106 128,74 Z" 
+                      fill="url(#clayGrad-${index})" 
+                      stroke="#fbbf24" 
+                      stroke-width="1.5" />
+
+                <!-- Decorative Clay Rim -->
+                <ellipse cx="80" cy="74" rx="50" ry="11" fill="none" stroke="url(#rimGrad-${index})" stroke-width="3" />
+                
+                <!-- Traditional Engraved Golden Dots -->
+                <g fill="#fde047" opacity="0.85">
+                  <circle cx="50" cy="88" r="2.2" />
+                  <circle cx="62" cy="98" r="2.2" />
+                  <circle cx="80" cy="104" r="2.6" />
+                  <circle cx="98" cy="98" r="2.2" />
+                  <circle cx="110" cy="88" r="2.2" />
+                </g>
+
+                <!-- Rangoli Petal Stand Below Diya -->
+                <path d="M 60,122 C 70,126 90,126 100,122 C 95,130 65,130 60,122 Z" fill="#991b1b" stroke="#f59e0b" stroke-width="1" />
+              </svg>
+            </div>
+
+            <!-- Diya Number & Her Nickname Label -->
+            <div class="mt-2 text-center w-full">
+              <span class="block text-[10px] uppercase font-bold tracking-wider text-amber-400/90 font-royal">
+                Diya ${diya.id}
+              </span>
+              <span class="block text-xs sm:text-sm font-bold text-amber-200 truncate font-sans">
+                ${diya.nickname}
+              </span>
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    /* ==============================================================
+       4. INTERACTION & POPUP LOGIC
+       ============================================================== */
+    function handleDiyaClick(index, event) {
+      initAudio();
+      
+      const wasLit = litStatus[index];
+      litStatus[index] = true;
+
+      // Update UI elements for this specific Diya
+      const flame = document.getElementById(`flameGroup-${index}`);
+      if (flame) flame.classList.remove('opacity-0');
+      
+      const prompt = document.getElementById(`promptBadge-${index}`);
+      if (prompt) prompt.classList.add('opacity-0', 'pointer-events-none');
+
+      const card = document.getElementById(`diyaCard-${index}`);
+      if (card) {
+        card.querySelector('.diya-halo').classList.add('diya-lit', 'bg-amber-500/10');
+      }
+
+      // Play chime
+      playChime(500 + index * 60);
+
+      // Launch micro fireworks from this diya position
+      triggerDiyaSparks(event.currentTarget);
+
+      // Show the Floating "I Love You" Popup customized with her nickname
+      showLoveFloatingPopup(index, event.currentTarget);
+
+      // Update the Main Wish Banner
+      displayWish(index);
+
+      // Update Counter
+      updateCounter();
+
+      // Check if all 7 are lit
+      if (!wasLit && litStatus.every(Boolean)) {
+        setTimeout(triggerGrandFinale, 900);
+      }
+    }
+
+    // Floating love popup right above clicked diya
+    function showLoveFloatingPopup(index, element) {
+      const diya = diyasData[index];
+      const container = document.getElementById('lovePopupContainer');
+      const rect = element.getBoundingClientRect();
+      const posX = rect.left + rect.width / 2;
+      const posY = Math.max(80, rect.top - 15);
+
+      const popup = document.createElement('div');
+      popup.className = 'fixed z-50 pointer-events-none -translate-x-1/2 animate-love-popup';
+      popup.style.left = `${posX}px`;
+      popup.style.top = `${posY}px`;
+
+      popup.innerHTML = `
+        <div class="px-5 py-3 rounded-2xl bg-gradient-to-r from-rose-900 via-amber-950 to-rose-900 border-2 border-amber-400 text-center shadow-2xl backdrop-blur-md min-w-[220px] max-w-[320px]">
+          <div class="text-rose-400 text-[11px] font-bold tracking-wider uppercase flex items-center justify-center gap-1.5">
+            <span>💖</span>
+            <span>A Love Note for ${diya.nickname}</span>
+            <span>💖</span>
+          </div>
+          <div class="text-base sm:text-lg font-royal font-bold text-amber-200 mt-0.5 drop-shadow">
+            ${diya.loveTitle}
+          </div>
+          <div class="text-xs text-rose-200 font-sans mt-0.5">
+            ${diya.loveSub}
+          </div>
+        </div>
+      `;
+
+      container.appendChild(popup);
+      setTimeout(() => {
+        popup.remove();
+      }, 2700);
+    }
+
+    // Display the specific diya's wish on the main hero banner
+    function displayWish(index) {
+      const diya = diyasData[index];
+      const tag = document.getElementById('wishDiyaTag');
+      const hindi = document.getElementById('wishHindi');
+      const english = document.getElementById('wishEnglish');
+      const hint = document.getElementById('wishActionHint');
+
+      // Subtle fade animation
+      hindi.style.opacity = '0';
+      english.style.opacity = '0';
+      
+      setTimeout(() => {
+        tag.innerHTML = `🪔 ${diya.tag} • ${diya.title} 🪔`;
+        hindi.innerText = diya.hindi;
+        english.innerText = diya.english;
+        hint.innerHTML = `❤️ Diya lit with love for <strong>${diya.nickname}</strong> ❤️`;
+        
+        hindi.style.opacity = '1';
+        english.style.opacity = '1';
+      }, 150);
+    }
+
+    function updateCounter() {
+      const count = litStatus.filter(Boolean).length;
+      document.getElementById('litCountText').innerText = `${count} of 7 Diyas Lighted`;
+    }
+
+    /* ==============================================================
+       5. FIREWORKS & CRACKER SIMULATION CANVAS
+       ============================================================== */
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let fireworks = [];
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Firework {
+      constructor(sx, sy, tx, ty) {
+        this.x = sx;
+        this.y = sy;
+        this.tx = tx;
+        this.ty = ty;
+        this.dist = Math.hypot(tx - sx, ty - sy);
+        this.travelled = 0;
+        this.speed = 3.5 + Math.random() * 2;
+        this.angle = Math.atan2(ty - sy, tx - sx);
+        this.brightness = Math.random() * 20 + 70;
+      }
+      update(idx) {
+        const vx = Math.cos(this.angle) * this.speed;
+        const vy = Math.sin(this.angle) * this.speed;
+        this.travelled = Math.hypot(this.x - (this.tx - vx), this.y - (this.ty - vy));
+
+        if (this.y <= this.ty || this.travelled >= this.dist) {
+          createSparks(this.tx, this.ty);
+          playCrackerPop();
+          fireworks.splice(idx, 1);
+        } else {
+          this.x += vx;
+          this.y += vy;
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#fef08a';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#f59e0b';
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    class Particle {
+      constructor(x, y, hue) {
+        this.x = x;
+        this.y = y;
+        this.angle = Math.random() * Math.PI * 2;
+        this.speed = Math.random() * 5 + 1.5;
+        this.friction = 0.94;
+        this.gravity = 0.8;
+        this.alpha = 1;
+        this.decay = Math.random() * 0.02 + 0.015;
+        this.color = hue;
+      }
+      update(idx) {
+        this.speed *= this.friction;
+        this.x += Math.cos(this.angle) * this.speed;
+        this.y += Math.sin(this.angle) * this.speed + this.gravity;
+        this.alpha -= this.decay;
+        if (this.alpha <= 0) {
+          particles.splice(idx, 1);
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowBlur = 6;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    const fireworkColors = ['#f59e0b', '#fbbf24', '#ef4444', '#ec4899', '#38bdf8', '#34d399', '#ffffff'];
+
+    function createSparks(x, y, count = 35) {
+      const hue = fireworkColors[Math.floor(Math.random() * fireworkColors.length)];
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle(x, y, hue));
+      }
+    }
+
+    function triggerDiyaSparks(element) {
+      const rect = element.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      createSparks(x, y, 40);
+    }
+
+    function launchRandomSkyFirework() {
+      const sx = canvas.width * 0.2 + Math.random() * canvas.width * 0.6;
+      const sy = canvas.height;
+      const tx = canvas.width * 0.15 + Math.random() * canvas.width * 0.7;
+      const ty = canvas.height * 0.12 + Math.random() * canvas.height * 0.35;
+      fireworks.push(new Firework(sx, sy, tx, ty));
+    }
+
+    // Regular festive ambient firecracker in the background sky
+    setInterval(() => {
+      if (Math.random() < 0.6) {
+        launchRandomSkyFirework();
+      }
+    }, 2800);
+
+    function animationLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let i = fireworks.length - 1; i >= 0; i--) {
+        fireworks[i].draw();
+        fireworks[i].update(i);
+      }
+
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].draw();
+        particles[i].update(i);
+      }
+
+      requestAnimationFrame(animationLoop);
+    }
+    requestAnimationFrame(animationLoop);
+
+    /* ==============================================================
+       6. GRAND FINALE & MODAL
+       ============================================================== */
+    function triggerGrandFinale() {
+      // Confetti burst
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#f59e0b', '#fbbf24', '#ec4899', '#ef4444', '#ffffff']
+        });
+      }
+
+      // Multiple fireworks
+      for (let i = 0; i < 4; i++) {
+        setTimeout(launchRandomSkyFirework, i * 300);
+      }
+
+      // Show Finale Modal
+      const modal = document.getElementById('finaleModal');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.remove('opacity-0');
+      }, 50);
+    }
+
+    // Close Modal Button
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      const modal = document.getElementById('finaleModal');
+      modal.classList.add('opacity-0');
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 400);
+    });
+
+    document.getElementById('modalCelebrationBtn').addEventListener('click', () => {
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 120, spread: 100, origin: { y: 0.5 } });
+      }
+      for (let i = 0; i < 5; i++) {
+        setTimeout(launchRandomSkyFirework, i * 250);
+      }
+      playChime(880);
+    });
+
+    /* ==============================================================
+       7. BUTTONS & CONTROLS
+       ============================================================== */
+    // Light All 7 Diyas
+    document.getElementById('lightAllBtn').addEventListener('click', () => {
+      initAudio();
+      diyasData.forEach((_, idx) => {
+        setTimeout(() => {
+          litStatus[idx] = true;
+          const flame = document.getElementById(`flameGroup-${idx}`);
+          if (flame) flame.classList.remove('opacity-0');
+          const prompt = document.getElementById(`promptBadge-${idx}`);
+          if (prompt) prompt.classList.add('opacity-0', 'pointer-events-none');
+          const card = document.getElementById(`diyaCard-${idx}`);
+          if (card) {
+            card.querySelector('.diya-halo').classList.add('diya-lit', 'bg-amber-500/10');
+            triggerDiyaSparks(card);
+          }
+          playChime(500 + idx * 50);
+        }, idx * 220);
+      });
+
+      setTimeout(() => {
+        displayWish(6); // Show the 7th wifey wish
+        updateCounter();
+        triggerGrandFinale();
+      }, 7 * 220 + 300);
+    });
+
+    // Reset All Diyas
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      for (let i = 0; i < 7; i++) {
+        litStatus[i] = false;
+        const flame = document.getElementById(`flameGroup-${i}`);
+        if (flame) flame.classList.add('opacity-0');
+        const prompt = document.getElementById(`promptBadge-${i}`);
+        if (prompt) prompt.classList.remove('opacity-0', 'pointer-events-none');
+        const card = document.getElementById(`diyaCard-${i}`);
+        if (card) {
+          card.querySelector('.diya-halo').classList.remove('diya-lit', 'bg-amber-500/10');
+        }
+      }
+      updateCounter();
+      const tag = document.getElementById('wishDiyaTag');
+      tag.innerHTML = `Touch Any Diya Below To Light It`;
+      document.getElementById('wishHindi').innerText = `"आस्था, तुम्हारी मुस्कान ही मेरे हर त्यौहार की सबसे खूबसूरत रौशनी है।"`;
+      document.getElementById('wishEnglish').innerText = `Every diya I ignite tonight whispers a tender prayer for your eternal happiness, my darling Aastha.`;
+      document.getElementById('wishActionHint').innerHTML = `👇 Tap on each Diya dedicated to your lovely names below`;
+    });
+
+    // Sound Toggle
+    const soundBtn = document.getElementById('soundToggleBtn');
+    soundBtn.addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      document.getElementById('soundIcon').innerText = soundEnabled ? '🔊' : '🔇';
+      document.getElementById('soundLabel').innerText = soundEnabled ? 'Sound On' : 'Sound Off';
+    });
+
+    // Initial Render on Page Load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderDiyas();
+      updateCounter();
+      // First ambient sky firework
+      setTimeout(launchRandomSkyFirework, 1000);
+    });
+  </script>
+</body>
+</html>
